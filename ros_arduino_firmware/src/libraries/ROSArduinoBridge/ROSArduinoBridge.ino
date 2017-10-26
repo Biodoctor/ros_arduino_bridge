@@ -51,7 +51,7 @@
 /* Define the motor controller and encoder library you are using */
 #ifdef USE_BASE
    /* The Pololu VNH5019 dual motor driver shield */
-   #define POLOLU_VNH5019
+   //#define POLOLU_VNH5019
 
    /* The Pololu MC33926 dual motor driver shield */
    //#define POLOLU_MC33926
@@ -64,6 +64,9 @@
 
    /* L298 Motor driver*/
    //#define L298_MOTOR_DRIVER
+
+   /* VNH2SP30 Motor driver*/
+   #define VNH2SP30_MOTOR_DRIVER
 #endif
 
 #define USE_SERVOS  // Enable use of PWM servos as defined in servos.h
