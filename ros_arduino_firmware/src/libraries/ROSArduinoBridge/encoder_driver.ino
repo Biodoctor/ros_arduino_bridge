@@ -68,6 +68,38 @@
       return;
     }
   }
+#elif defined(ARDUINO_OPT_COUNTER)
+  volatile long left_enc_pos = 0L;
+  volatile long right_enc_pos = 0L;
+    
+  /* Interrupt routine for LEFT encoder, taking care of actual counting */
+  ISR (PCINT2_vect){
+  
+  	left_enc_pos += 1; // interrupt indicates moved 1 slot
+  }
+  
+  /* Interrupt routine for RIGHT encoder, taking care of actual counting */
+  ISR (PCINT1_vect){
+  
+  	right_enc_pos += 1;
+  }
+  
+  /* Wrap the encoder reading function */
+  long readEncoder(int i) {
+    if (i == LEFT) return left_enc_pos;
+    else return right_enc_pos;
+  }
+
+  /* Wrap the encoder reset function */
+  void resetEncoder(int i) {
+    if (i == LEFT){
+      left_enc_pos=0L;
+      return;
+    } else { 
+      right_enc_pos=0L;
+      return;
+    }
+  }
 #else
   #error A encoder driver must be selected!
 #endif
@@ -79,4 +111,3 @@ void resetEncoders() {
 }
 
 #endif
-
