@@ -45,8 +45,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
-//#define USE_BASE      // Enable the base controller code
-#undef USE_BASE     // Disable the base controller code
+#define USE_BASE      // Enable the base controller code
+//#undef USE_BASE     // Disable the base controller code
 
 /* Define the motor controller and encoder library you are using */
 #ifdef USE_BASE
@@ -60,7 +60,10 @@
    //#define ROBOGAIA
    
    /* Encoders directly attached to Arduino board */
-   #define ARDUINO_ENC_COUNTER
+   //#define ARDUINO_ENC_COUNTER
+
+   /* Optical sensor ditectly attached to Arduino board */
+   #define ARDUINO_OPT_COUNTER
 
    /* L298 Motor driver*/
    //#define L298_MOTOR_DRIVER
@@ -263,6 +266,19 @@ void setup() {
     PCMSK2 |= (1 << LEFT_ENC_PIN_A)|(1 << LEFT_ENC_PIN_B);
     // tell pin change mask to listen to right encoder pins
     PCMSK1 |= (1 << RIGHT_ENC_PIN_A)|(1 << RIGHT_ENC_PIN_B);
+    
+    // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
+    PCICR |= (1 << PCIE1) | (1 << PCIE2);
+  #endif
+  #ifdef ARDUINO_OPT_COUNTER
+    //set as inputs
+    DDRD &= ~(1<<LEFT_ENC_PIN);
+    DDRC &= ~(1<<RIGHT_ENC_PIN);
+    
+    // tell pin change mask to listen to left encoder pin
+    PCMSK2 |= (1 << LEFT_ENC_PIN);
+    // tell pin change mask to listen to right encoder pin
+    PCMSK1 |= (1 << RIGHT_ENC_PIN);
     
     // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
     PCICR |= (1 << PCIE1) | (1 << PCIE2);
