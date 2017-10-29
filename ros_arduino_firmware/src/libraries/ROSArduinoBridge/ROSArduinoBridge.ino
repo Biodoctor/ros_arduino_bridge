@@ -72,8 +72,8 @@
    #define VNH2SP30_MOTOR_DRIVER
 #endif
 
-#define USE_SERVOS  // Enable use of PWM servos as defined in servos.h
-//#undef USE_SERVOS     // Disable use of PWM servos
+//#define USE_SERVOS  // Enable use of PWM servos as defined in servos.h
+#undef USE_SERVOS     // Disable use of PWM servos
 
 /* Serial port baud rate */
 #define BAUDRATE     57600
@@ -271,17 +271,8 @@ void setup() {
     PCICR |= (1 << PCIE1) | (1 << PCIE2);
   #endif
   #ifdef ARDUINO_OPT_COUNTER
-    //set as inputs
-    DDRD &= ~(1<<LEFT_ENC_PIN);
-    DDRC &= ~(1<<RIGHT_ENC_PIN);
-    
-    // tell pin change mask to listen to left encoder pin
-    PCMSK2 |= (1 << LEFT_ENC_PIN);
-    // tell pin change mask to listen to right encoder pin
-    PCMSK1 |= (1 << RIGHT_ENC_PIN);
-    
-    // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
-    PCICR |= (1 << PCIE1) | (1 << PCIE2);
+    attachInterrupt(digitalPinToInterrupt(LEFT_ENC_PIN), left_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_ENC_PIN), right_int, RISING);
   #endif
   initMotorController();
   resetPID();
