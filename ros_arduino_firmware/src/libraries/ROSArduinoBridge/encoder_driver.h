@@ -15,15 +15,16 @@
 #endif
 
 #ifdef ARDUINO_OPT_COUNTER
+  #define LEFT 0
+  #define RIGHT 1
   //below can be changed, but should be PORTD pins; 
   //otherwise additional changes in the code are required
-  #define LEFT_ENC_PIN PD2  //pin 2
+  #define LEFT_ENC_PIN 20 //PD2  //pin 2
   
   //below can be changed, but should be PORTC pins
-  #define RIGHT_ENC_PIN PC4  //pin A4
+  #define RIGHT_ENC_PIN 21 //PC4  //pin A4
 #endif
 
 long readEncoder(int i);
 void resetEncoder(int i);
 void resetEncoders();
-
