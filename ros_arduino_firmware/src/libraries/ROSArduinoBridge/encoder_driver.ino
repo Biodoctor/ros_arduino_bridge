@@ -73,13 +73,13 @@
   volatile long right_enc_pos = 0L;
     
   /* Interrupt routine for LEFT encoder, taking care of actual counting */
-  ISR (PCINT2_vect){
+  void left_int(){
   
   	left_enc_pos += 1; // interrupt indicates moved 1 slot
   }
   
   /* Interrupt routine for RIGHT encoder, taking care of actual counting */
-  ISR (PCINT1_vect){
+  void right_int(){
   
   	right_enc_pos += 1;
   }
